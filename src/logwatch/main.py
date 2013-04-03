@@ -1,13 +1,13 @@
 """
 Usage:
-    log-watch [options]
+    logwatch [options]
 
 Options:
     -h --help                       Show this help
     -H --host=<host>                Host to connect to [default: localhost]
     -p --port=<port>                Port to connect to [default: 6000]
     -s --source=<source>            Source of messages to tail
-    -S --source-host=<source-host>   Source host of messages to tail
+    -S --source-host=<source-host>  Source host of messages to tail
 """
 import json
 import re
