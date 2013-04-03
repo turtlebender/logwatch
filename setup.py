@@ -6,9 +6,19 @@ import ConfigParser
 parser = ConfigParser.RawConfigParser()
 parser.read('snake.cfg')
 
+with open('requirements.txt') as handle:
+    requirements = [req.strip() for req in handle.readlines()
+            if req and not req.startswith('#')]
+
 setuptools.setup(name=parser.get('release', 'name'),
     version=parser.get('release', 'version'),
     package_dir={'': 'src'},
     packages=setuptools.find_packages('src'),
-    provides=setuptools.find_packages('src')
+    provides=setuptools.find_packages('src'),
+    install_requires=requirements,
+    entry_points={
+      'console_scripts': [
+        'logwatch=logwatch.main:main'
+      ]
+      },
     )
