@@ -8,6 +8,7 @@ Options:
     -p --port=<port>                Port to connect to [default: 6000]
     -s --source=<source>            Source of messages to tail
     -S --source-host=<source-host>  Source host of messages to tail
+    -t --type=<type>                Type of log message
 """
 import json
 import re
@@ -28,7 +29,7 @@ def field_match(pattern, field):
     return True
 
 
-def tail(host, port, source=None, source_host=None):
+def tail(host, port, source=None, source_host=None, log_type=None):
     """
     Start to tail the logs
     """
@@ -44,7 +45,8 @@ def tail(host, port, source=None, source_host=None):
         message = json.loads(s.makefile().readline())
         if field_match(source,
                 message['@source']) and field_match(source_host,
-                        message['@source_host']):
+                        message['@source_host']) and field_match(log_type,
+                            message['@type']):
             print "[{0}]:  {1}".format(colored.blue(message['@source_host']),
                     message['@message'])
 
@@ -55,7 +57,8 @@ def main():
     """
     arguments = docopt(__doc__)
     tail(arguments['--host'], int(arguments['--port']),
-            arguments['--source'], arguments['--source-host'])
+            arguments['--source'], arguments['--source-host'],
+            arguments['--type'])
 
 
 if __name__ == '__main__':
