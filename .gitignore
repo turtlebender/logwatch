@@ -1,0 +1,6 @@
+*.pyc
+build
+dist
+gearbox*
+*.egg-info
+vendor/python
